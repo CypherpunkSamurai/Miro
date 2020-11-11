@@ -64,9 +64,11 @@ class AriaDownloadHelper(DownloadHelper):
                                       on_download_complete=self.__onDownloadComplete)
 
 
-    def add_download(self, link: str, path,listener):
+    def add_download(self, link: str, path,listener, use_tor=False):
         if is_magnet(link):
             download = aria2.add_magnet(link, {'dir': path})
+        elif use_tor:
+            download = aria2.add_uris([link], {'dir': path, 'http-proxy' : 'http://127.0.0.1:8118', 'https-proxy' : 'http://127.0.0.1:8118', 'ftp-proxy' : 'http://127.0.0.1:8118'})
         else:
             download = aria2.add_uris([link], {'dir': path})
         if download.error_message:  # no need to proceed further at this point
