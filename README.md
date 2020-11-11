@@ -1,4 +1,4 @@
-# Mirrotaur
+# Miro
 A python3 aria2 telegram bot that supports mirroring from various sources (URL, Torrent, Magnet, Onion link, Youtube, and more). The bot also syncs content into Google Team Drive. For any bugs report @Scratch171, me on Telegram.
 
 # What is this repo about?
