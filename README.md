@@ -1,3 +1,6 @@
+# Mirrotaur
+A python3 aria2 telegram bot that supports mirroring from various sources (URL, Torrent, Magnet, Onion link, Youtube, and more). The bot also syncs content into Google Team Drive. For any bugs report @Scratch171, me on Telegram.
+
 # What is this repo about?
 This is a telegram bot writen in python for mirroring files on the internet to our beloved Google Drive.
 
@@ -19,6 +22,9 @@ This project is heavily inspired from @out386 's telegram bot which is written i
 
 # Upcoming features (TODOs):
 - Add Encrypted Storage solution
+- Queing downloads
+- Mirror GoIndex
+- Automated Youtube Mirror
 
 # How to deploy?
 Deploying is pretty much straight forward and is divided into several steps as follows:
