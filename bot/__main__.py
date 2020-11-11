@@ -73,6 +73,8 @@ def bot_help(update, context):
 
 /{BotCommands.MirrorCommand} [download_url][magnet_link]: Start mirroring the link to google drive
 
+/{BotCommands.OnionMirrorCommand} [download_url]: Start mirroring through tor
+
 /{BotCommands.UnzipMirrorCommand} [download_url][magnet_link] : starts mirroring and if downloaded file is any archive , extracts it to google drive
 
 /{BotCommands.TarMirrorCommand} [download_url][magnet_link]: start mirroring and upload the archived (.tar) version of the download

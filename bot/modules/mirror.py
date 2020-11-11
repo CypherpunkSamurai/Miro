@@ -170,7 +170,7 @@ class MirrorListener(listeners.MirrorListeners):
         else:
             update_all_messages()
 
-def _mirror(bot, update, isTar=False, extract=False):
+def _mirror(bot, update, isTar=False, extract=False, use_tor=False):
     message_args = update.message.text.split(' ')
     try:
         link = message_args[1]
@@ -212,7 +212,7 @@ def _mirror(bot, update, isTar=False, extract=False):
         LOGGER.info(f'{link}: {e}')
 
     listener = MirrorListener(bot, update, isTar, tag, extract)
-    ariaDlManager.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/',listener)
+    ariaDlManager.add_download(link, f'{DOWNLOAD_DIR}/{listener.uid}/',listener, use_tor=use_tor)
     sendStatusMessage(update, bot)
     if len(Interval) == 0:
         Interval.append(setInterval(DOWNLOAD_STATUS_UPDATE_INTERVAL, update_all_messages))
@@ -221,6 +221,10 @@ def _mirror(bot, update, isTar=False, extract=False):
 @run_async
 def mirror(update, context):
     _mirror(context.bot, update)
+
+@run_async
+def onion_mirror(update, context):
+    _mirror(context.bot, update, use_tor=True)
 
 
 @run_async
@@ -235,10 +239,13 @@ def unzip_mirror(update, context):
 
 mirror_handler = CommandHandler(BotCommands.MirrorCommand, mirror,
                                 filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
+onion_mirror_handler = CommandHandler(BotCommands.OnionMirrorCommand, onion_mirror,
+                                filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
 tar_mirror_handler = CommandHandler(BotCommands.TarMirrorCommand, tar_mirror,
                                     filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
 unzip_mirror_handler = CommandHandler(BotCommands.UnzipMirrorCommand, unzip_mirror,
                                       filters=CustomFilters.authorized_chat | CustomFilters.authorized_user)
 dispatcher.add_handler(mirror_handler)
+dispatcher.add_handler(onion_mirror_handler)
 dispatcher.add_handler(tar_mirror_handler)
 dispatcher.add_handler(unzip_mirror_handler)
