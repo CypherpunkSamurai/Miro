@@ -6,12 +6,23 @@ RUN apt-get -qq update && \
     DEBIAN_FRONTEND="noninteractive" apt-get -qq install -y tzdata zip unzip wget curl aria2 git python3 python3-pip \
     locales python3-lxml \
     curl pv jq ffmpeg \
-    p7zip-full p7zip-rar tor
+    p7zip-full p7zip-rar tor socat
 COPY requirements.txt .
 COPY extract /usr/local/bin
 RUN chmod +x /usr/local/bin/extract
 RUN pip3 install --no-cache-dir -r requirements.txt && \
     apt-get -qq purge git
+
+
+# Use tor for dns
+RUN echo nameserver 127.0.0.1 >> /etc/resolv.conf
+RUN echo "1" > /proc/sys/net/ipv4/ip_forward
+
+# IPTABLES Local DNS Proxy
+RUN iptables -t nat -A PREROUTING -s 127.0.0.1 -p tcp --dport 53 -j REDIRECT --to 9053`
+RUN iptables -t nat -A OUTPUT -s 127.0.0.1 -p tcp --dport 53 -j REDIRECT --to 9053`
+RUN iptables -t nat -A PREROUTING -s 127.0.0.1 -p udp --dport 53 -j REDIRECT --to 9053`
+RUN iptables -t nat -A OUTPUT -s 127.0.0.1 -p udp --dport 53 -j REDIRECT --to 9053`
 
 
 # Clean Cache
