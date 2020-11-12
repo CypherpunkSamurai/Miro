@@ -25,6 +25,7 @@ RUN wget https://github.com/mayswind/AriaNg/releases/download/1.1.7/AriaNg-1.1.7
 
 # Clean Cache
 RUN apt-get autoclean
+WORKDIR /usr/src/app
 
 RUN locale-gen en_US.UTF-8
 ENV LANG en_US.UTF-8
