@@ -1,5 +1,0 @@
-:{$PORT} {
-  root * /usr/src/app/ariang/
-  file_server
-  reverse_proxy /jsonrpc 127.0.0.1:6800
-}
