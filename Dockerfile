@@ -15,14 +15,7 @@ RUN pip3 install --no-cache-dir -r requirements.txt && \
 
 
 # Use tor for dns
-RUN echo nameserver 127.0.0.1 >> /etc/resolv.conf
-RUN echo "1" > /proc/sys/net/ipv4/ip_forward
-
-# IPTABLES Local DNS Proxy
-RUN iptables -t nat -A PREROUTING -s 127.0.0.1 -p tcp --dport 53 -j REDIRECT --to 9053`
-RUN iptables -t nat -A OUTPUT -s 127.0.0.1 -p tcp --dport 53 -j REDIRECT --to 9053`
-RUN iptables -t nat -A PREROUTING -s 127.0.0.1 -p udp --dport 53 -j REDIRECT --to 9053`
-RUN iptables -t nat -A OUTPUT -s 127.0.0.1 -p udp --dport 53 -j REDIRECT --to 9053`
+RUN dns_proxy.sh
 
 
 # Clean Cache
